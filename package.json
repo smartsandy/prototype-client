@@ -1,0 +1,55 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "Your app description here",
+  "author": "Your Name <your.email@example.com>",
+  "main": "main.js",  
+  "build": {
+    "appId": "com.yourapp.id",
+    "productName": "MyApp",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "client/**/*",
+      "server/**/*",
+      "main.mjs", 
+      "main.js",  
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "server/venv",
+        "to": "venv",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "uvicorn server.main:app --host 127.0.0.1 --port 8000",
+    "client": "cross-env BROWSER=none npm --prefix client start --openssl-legacy-provider",
+    "electron": "electron .",
+    "package": "electron-builder"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^26.1.0",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "electron-is-dev": "^3.0.1"
+  }
+}
